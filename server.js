@@ -24,7 +24,7 @@ const db = knex({
   app.use(bodyParser.json());
   
   app.get('/', (req, res)=> {
-    res.send('it is working!');
+    res.send('it is working!')
   })
   
   app.post('/signin', (req, res) => {
