@@ -28,6 +28,9 @@ const db = knex({
   })
   
   app.post('/signin', (req, res) => {
+    if(!email ||!password){
+        return  res.status(400).json('incorrect form submission');
+    }
     db.select('email', 'hash').from('login')
       .where('email', '=', req.body.email)
       .then(data => {
@@ -47,6 +50,9 @@ const db = knex({
   })
   
   app.post('/register', (req, res) => {
+    if(!email ||!name||!password){
+        return  res.status(400).json('incorrect form submission');
+    }
     const { email, name, password } = req.body;
     const hash = bcrypt.hashSync(password);
       db.transaction(trx => {
@@ -99,6 +105,6 @@ const db = knex({
   })
   
   
-  app.listen(3000, ()=> {
-    console.log('app is running on port 3000');
+  app.listen(process.env.PORT || 3000, ()=> {
+    console.log('app is running on port ${process.env.PORT}');
   })
